@@ -30,8 +30,8 @@ export async function GET(request: Request) {
             </div>
         ),
         {
-            width: 1900,
-            height: 1000,
+            width: 950,
+            height: 500,
             // fonts: [
             //     {
             //         name: "NotoSerifKR",
