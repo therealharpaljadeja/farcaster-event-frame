@@ -1,6 +1,8 @@
 import { Redis } from "@upstash/redis";
 import { NextRequest, NextResponse } from "next/server";
 
+export const revalidate = 0;
+
 const redis = new Redis({
     url: process.env.REDIS_URL as string,
     token: process.env.REDIS_TOKEN as string,
