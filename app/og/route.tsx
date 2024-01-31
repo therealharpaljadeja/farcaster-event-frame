@@ -18,12 +18,12 @@ export async function GET(request: Request) {
 
     return new ImageResponse(
         (
-            <div tw="flex h-[950px] w-[500px] relative">
+            <div tw="flex h-[421px] w-[800px] relative">
                 <img
                     src={imageData as unknown as string}
-                    tw="absolute left-0 top-0 h-[500px]"
+                    tw="absolute left-0 top-0 h-[421px]"
                 />
-                <div tw="flex flex-col text-left mt-[-300px] ml-[50px] justify-center">
+                <div tw="flex flex-col text-left mt-[100px] ml-[45px] justify-center">
                     <h2 tw="z-10 text-black text-[48px]">{tickets}</h2>
                     <h4 tw="text-black mt-[-20px] text-[40px]">
                         Tickets Available
@@ -32,8 +32,8 @@ export async function GET(request: Request) {
             </div>
         ),
         {
-            width: 950,
-            height: 500,
+            width: 800,
+            height: 421,
             // fonts: [
             //     {
             //         name: "NotoSerifKR",
