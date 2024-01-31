@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 
-const HOST =
-    "https://b980-2401-4900-1c20-7991-74c4-efee-5a1b-f225.ngrok-free.app";
-
 export enum ResponseType {
     TICKET_AVAILABLE, // Slots available (default)
     NO_TICKET_AVAILABLE, // Slots not avialable
@@ -28,8 +25,8 @@ export type User = {
 };
 
 export const redis = new Redis({
-    url: "https://apn1-optimal-spaniel-33266.upstash.io",
-    token: "AYHyASQgNzI1Y2I3NTgtODNjZi00MGM5LThjMjktNGJiMTkwYjk3NWJjNzcxYWQ3MmZjMGIxNGFkZDg1YmU4MmE5MDUxMTU0MzY=",
+    url: process.env.REDIS_URL,
+    token: process.env.REDIS_TOKEN,
 });
 
 export function getResponse(type: ResponseType) {
@@ -51,8 +48,8 @@ export function getResponse(type: ResponseType) {
                 <html>
                     <head>
                         <meta property="fc:frame" content="vNext" />
-                        <meta property="fc:frame:image" content="${HOST}/${RESPONSE_IMAGE}" />
-                        <meta property="og:image" content="${HOST}/${RESPONSE_IMAGE}" />
+                        <meta property="fc:frame:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
+                        <meta property="og:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
                     </head>
                 </html>
             `);
@@ -62,12 +59,12 @@ export function getResponse(type: ResponseType) {
                 <html>
                     <head>
                         <meta property="fc:frame" content="vNext" />
-                        <meta property="fc:frame:image" content="${HOST}/${RESPONSE_IMAGE}" />
-                        <meta property="og:image" content="${HOST}/${RESPONSE_IMAGE}" />
+                        <meta property="fc:frame:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
+                        <meta property="og:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
                         <meta property="fc:frame:button:1" content="Vegan" />
                         <meta property="fc:frame:button:2" content="Vegetarian" />
                         <meta property="fc:frame:button:3" content="None" />
-                        <meta property="fc:frame:post_url" content="${HOST}/api/step2" />
+                        <meta property="fc:frame:post_url" content="${process.env["HOST"]}/api/step2" />
                     </head>
                 </html>
             `);
@@ -77,8 +74,8 @@ export function getResponse(type: ResponseType) {
                 <html>
                     <head>
                         <meta property="fc:frame" content="vNext" />
-                        <meta property="fc:frame:image" content="${HOST}/${RESPONSE_IMAGE}" />
-                        <meta property="og:image" content="${HOST}/${RESPONSE_IMAGE}" />
+                        <meta property="fc:frame:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
+                        <meta property="og:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
                     </head>
                 </html>
             `);
@@ -88,10 +85,10 @@ export function getResponse(type: ResponseType) {
                 <html>
                     <head>
                         <meta property="fc:frame" content="vNext" />
-                        <meta property="fc:frame:image" content="${HOST}/${RESPONSE_IMAGE}" />
-                        <meta property="og:image" content="${HOST}/${RESPONSE_IMAGE}" />
+                        <meta property="fc:frame:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
+                        <meta property="og:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
                         <meta property="fc:frame:button:1" content="Try Again" />
-                        <meta property="fc:frame:post_url" content="${HOST}" />
+                        <meta property="fc:frame:post_url" content="${process.env["HOST"]}" />
                     </head>
                 </html>
             `);
@@ -101,8 +98,8 @@ export function getResponse(type: ResponseType) {
                     <html>
                         <head>
                             <meta property="fc:frame" content="vNext" />
-                            <meta property="fc:frame:image" content="${HOST}/${RESPONSE_IMAGE}" />
-                            <meta property="og:image" content="${HOST}/${RESPONSE_IMAGE}" />
+                            <meta property="fc:frame:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
+                            <meta property="og:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
                         </head>
                     </html>
                 `);
@@ -112,18 +109,39 @@ export function getResponse(type: ResponseType) {
                 <html>
                     <head>
                         <meta property="fc:frame" content="vNext" />
-                        <meta property="fc:frame:image" content="${HOST}/${
-                IMAGE[ResponseType.ERROR]
-            }" />
-                        <meta property="og:image" content="${HOST}/${
-                IMAGE[ResponseType.ERROR]
-            }" />
+                        <meta property="fc:frame:image" content="${
+                            process.env["HOST"]
+                        }/${IMAGE[ResponseType.ERROR]}" />
+                        <meta property="og:image" content="${
+                            process.env["HOST"]
+                        }/${IMAGE[ResponseType.ERROR]}" />
                         <meta property="fc:frame:button:1" content="Try Again" />
-                        <meta property="fc:frame:post_url" content="${HOST}" />
+                        <meta property="fc:frame:post_url" content="${
+                            process.env["HOST"]
+                        }" />
                     </head>
                 </html>
             `);
     }
+
+    return new NextResponse(`
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta property="fc:frame" content="vNext" />
+                <meta property="fc:frame:image" content="${
+                    process.env["HOST"]
+                }/${IMAGE[ResponseType.ERROR]}" />
+                <meta property="og:image" content="${process.env["HOST"]}/${
+        IMAGE[ResponseType.ERROR]
+    }" />
+                <meta property="fc:frame:button:1" content="Try Again" />
+                <meta property="fc:frame:post_url" content="${
+                    process.env["HOST"]
+                }" />
+            </head>
+        </html>
+    `);
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
@@ -138,14 +156,14 @@ export async function POST(req: NextRequest): Promise<Response> {
         throw new Error("Invalid frame request");
     }
 
-    // // Check if user has liked and recasted
-    // const hasLikedAndRecasted =
-    //     !!status?.action?.cast?.viewer_context?.liked &&
-    //     !!status?.action?.cast?.viewer_context?.recasted;
+    // Check if user has liked and recasted
+    const hasLikedAndRecasted =
+        !!status?.action?.cast?.viewer_context?.liked &&
+        !!status?.action?.cast?.viewer_context?.recasted;
 
-    // if (!hasLikedAndRecasted) {
-    //     return getResponse(ResponseType.RECAST);
-    // }
+    if (!hasLikedAndRecasted) {
+        return getResponse(ResponseType.RECAST);
+    }
 
     const { fid, username } = status?.action?.interactor;
 
