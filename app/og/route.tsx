@@ -7,15 +7,11 @@ export async function GET(request: Request) {
 
     const tickets = searchParams.get("tickets");
 
-    const imageData = await fetch(
-        new URL("../../public/start.png", import.meta.url)
-    ).then((res) => res.arrayBuffer());
-
     return new ImageResponse(
         (
             <div tw="flex h-[421px] w-[800px] relative">
                 <img
-                    src={imageData as unknown as string}
+                    src={"https://i.postimg.cc/nc3t7rHF/start.png"}
                     tw="absolute left-0 top-0 h-[421px]"
                 />
                 <div tw="flex flex-col text-left mt-[100px] ml-[45px] justify-center">
