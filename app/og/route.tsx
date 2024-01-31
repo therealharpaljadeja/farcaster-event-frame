@@ -3,14 +3,9 @@ import { ImageResponse } from "next/og";
 export const runtime = "experimental-edge";
 
 export async function GET(request: Request) {
-    // const notoSerifKR = await fetch(
-    //     new URL("../../public/NotoSerifKR-Regular.otf", import.meta.url)
-    // ).then((res) => res.arrayBuffer());
-
     const { searchParams } = new URL(request.url);
 
-    const hasTickets = searchParams.has("tickets");
-    const tickets = hasTickets ? searchParams.get("tickets") : "0";
+    const tickets = searchParams.get("tickets");
 
     const imageData = await fetch(
         new URL("../../public/start.png", import.meta.url)
@@ -32,13 +27,6 @@ export async function GET(request: Request) {
         {
             width: 800,
             height: 421,
-            // fonts: [
-            //     {
-            //         name: "NotoSerifKR",
-            //         data: notoSerifKR,
-            //         weight: 400,
-            //     },
-            // ],
         }
     );
 }
