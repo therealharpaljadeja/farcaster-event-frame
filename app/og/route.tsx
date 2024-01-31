@@ -24,10 +24,8 @@ export async function GET(request: Request) {
                     tw="absolute left-0 top-0 h-[421px]"
                 />
                 <div tw="flex flex-col text-left mt-[100px] ml-[45px] justify-center">
-                    <h2 tw="z-10 text-black text-[48px]">{tickets}</h2>
-                    <h4 tw="text-black mt-[-20px] text-[40px]">
-                        Tickets Available
-                    </h4>
+                    <h2 tw="z-10 text-black text-[36px]">{tickets}</h2>
+                    <h4 tw="text-black mt-[-20px] text-[24px]">Tickets Only</h4>
                 </div>
             </div>
         ),
