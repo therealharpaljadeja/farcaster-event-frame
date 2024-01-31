@@ -18,14 +18,16 @@ export async function GET(request: Request) {
 
     return new ImageResponse(
         (
-            <div tw="flex h-[1000px] w-[1900px] relative">
+            <div tw="flex h-[950px] w-[500px] relative">
                 <img
                     src={imageData as unknown as string}
-                    tw="absolute left-0 top-0"
+                    tw="absolute left-0 top-0 h-[500px]"
                 />
-                <div tw="flex flex-col text-left mt-[250px] ml-[100px] justify-center">
-                    <h2 tw="z-10 text-black text-[150px]">{tickets}</h2>
-                    <h4 tw="text-black text-[80px]">Tickets Available</h4>
+                <div tw="flex flex-col text-left mt-[-300px] ml-[50px] justify-center">
+                    <h2 tw="z-10 text-black text-[48px]">{tickets}</h2>
+                    <h4 tw="text-black mt-[-20px] text-[40px]">
+                        Tickets Available
+                    </h4>
                 </div>
             </div>
         ),
