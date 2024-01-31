@@ -1,12 +1,19 @@
 import { NextRequest } from "next/server";
+
 import {
     DIETARY_RESTRICTIONS,
     ResponseType,
     User,
     getResponse,
-    redis,
     validateFrameRequest,
-} from "../step1/route";
+} from "@/utils";
+
+import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+    url: process.env.REDIS_URL as string,
+    token: process.env.REDIS_TOKEN as string,
+});
 
 export async function POST(req: NextRequest): Promise<Response> {
     const body: { trustedData?: { messageBytes?: string } } = await req.json();
