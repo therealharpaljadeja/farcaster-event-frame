@@ -8,6 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
         `${process.env["HOST"]}/api/ticketsAvailable`,
         {
             method: "GET",
+            cache: "no-cache",
         }
     );
 
