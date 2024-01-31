@@ -9,6 +9,9 @@ export async function generateMetadata(): Promise<Metadata> {
         {
             method: "GET",
             cache: "no-cache",
+            next: {
+                revalidate: 1,
+            },
         }
     );
 
