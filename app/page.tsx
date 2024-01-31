@@ -21,6 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
             title: "Consumer Crypto Space",
             images: [imageUrl],
         },
+        metadataBase: new URL(process.env["HOST"] as string),
         other: {
             "fc:frame": "vNext",
             "fc:frame:image": imageUrl,
