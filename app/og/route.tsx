@@ -3,9 +3,9 @@ import { ImageResponse } from "next/og";
 export const runtime = "experimental-edge";
 
 export async function GET(request: Request) {
-    const notoSerifKR = await fetch(
-        new URL("../../public/NotoSerifKR-Regular.otf", import.meta.url)
-    ).then((res) => res.arrayBuffer());
+    // const notoSerifKR = await fetch(
+    //     new URL("../../public/NotoSerifKR-Regular.otf", import.meta.url)
+    // ).then((res) => res.arrayBuffer());
 
     const { searchParams } = new URL(request.url);
 
@@ -32,13 +32,13 @@ export async function GET(request: Request) {
         {
             width: 1900,
             height: 1000,
-            fonts: [
-                {
-                    name: "NotoSerifKR",
-                    data: notoSerifKR,
-                    weight: 400,
-                },
-            ],
+            // fonts: [
+            //     {
+            //         name: "NotoSerifKR",
+            //         data: notoSerifKR,
+            //         weight: 400,
+            //     },
+            // ],
         }
     );
 }
