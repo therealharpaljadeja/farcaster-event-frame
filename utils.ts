@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const NEYNAR_API_KEY = "NEYNAR_API_DOCS";
+const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY;
 
 export enum ResponseType {
     TICKET_AVAILABLE, // Slots available (default)
@@ -143,7 +143,7 @@ export async function validateFrameRequest(data: string | undefined) {
     };
 
     return await fetch(
-        "https://api.neynar.com/v2/farcaster/frame/validate",
+        `${process.env.NEYNAR_HTTP_URL}/v2/farcaster/frame/validate`,
         options
     )
         .then((response) => response.json())
