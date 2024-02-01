@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 import {
     EVENT_ACTION,
@@ -25,6 +25,26 @@ export async function POST(req: NextRequest): Promise<Response> {
         throw new Error("Invalid frame request");
     }
 
+    const tappedButton = status?.action.tapped_button.index;
+    const ticketsAvailable = await redis.get("ticketsAvailable");
+
+    if (tappedButton === 3) {
+        return new NextResponse(`
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta property="fc:frame" content="vNext" />
+                <meta property="fc:frame:image" content="${process.env["HOST"]}/og?tickets=${ticketsAvailable}" />
+                <meta property="og:image" content="${process.env["HOST"]}/og?tickets=${ticketsAvailable}" />
+                <meta property="fc:frame:post_url" content="${process.env["HOST"]}/api/step1" />
+                <meta property="fc:frame:button:1" content="Attend" />
+                <meta property="fc:frame:button:2" content="Show & Tell (2/22)" />
+                <meta property="fc:frame:button:3" content="Refresh" />
+            </head>
+        </html>
+    `);
+    }
+
     // Check if user has liked and recasted
     const hasLikedAndRecasted =
         !!status?.action?.cast?.viewer_context?.liked &&
@@ -47,8 +67,6 @@ export async function POST(req: NextRequest): Promise<Response> {
     if (!isTicketAvailable) {
         return getResponse(ResponseType.NO_TICKET_AVAILABLE);
     }
-
-    const tappedButton = status?.action.tapped_button.index;
 
     await redis.set(fid, {
         username,

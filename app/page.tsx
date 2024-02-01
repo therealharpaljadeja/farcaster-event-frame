@@ -33,6 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
             "fc:frame:post_url": `${process.env["HOST"]}/api/step1`,
             "fc:frame:button:1": "Attend",
             "fc:frame:button:2": "Show & Tell (2/22)",
+            "fc:frame:button:3": "Refresh",
         },
     };
 }
