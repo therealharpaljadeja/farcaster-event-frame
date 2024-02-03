@@ -23,11 +23,13 @@ export async function POST(req: NextRequest): Promise<Response> {
     }
 
     const { fid } = status.action.interactor;
+    const { text: email } = status.input;
 
     let user = (await redis.get(fid)) as User;
 
     await redis.set(fid, {
         ...user,
+        email,
         rsvp: true,
     });
 
