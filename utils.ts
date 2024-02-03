@@ -48,6 +48,7 @@ export function getResponse(type: ResponseType) {
                         <meta property="fc:frame:button:1" content="Vegan" />
                         <meta property="fc:frame:button:2" content="Vegetarian" />
                         <meta property="fc:frame:button:3" content="None" />
+                        <meta property="fc:frame:input:text" content="Other" />,
                         <meta property="fc:frame:post_url" content="${process.env["HOST"]}/api/step2" />
                     </head>
                 </html>
