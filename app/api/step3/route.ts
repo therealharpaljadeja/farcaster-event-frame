@@ -23,7 +23,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     }
 
     const { fid } = status.action.interactor;
-    const { text: email } = status.input;
+    const { text: email } = status?.action?.input;
 
     let user = (await redis.get(fid)) as User;
 
