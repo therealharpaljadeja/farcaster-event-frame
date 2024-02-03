@@ -7,6 +7,7 @@ export enum ResponseType {
     NO_TICKET_AVAILABLE, // Slots not avialable
     RECAST, // Not liked and recasted
     DIETARY_RESTRICTIONS,
+    EMAIL,
     ALREADY_RSVP, // Already RSVP'd
     ERROR,
     SUCCESS, // RSVP success, next is redirect to enter email / or keep dm open
@@ -20,6 +21,7 @@ export function getResponse(type: ResponseType) {
         [ResponseType.DIETARY_RESTRICTIONS]: "status/dietary-restrictions.png",
         [ResponseType.ALREADY_RSVP]: "status/already-rsvp.png",
         [ResponseType.ERROR]: "status/error.png",
+        [ResponseType.EMAIL]: "status/email.png",
         [ResponseType.SUCCESS]: "status/success.png",
     };
 
@@ -48,8 +50,21 @@ export function getResponse(type: ResponseType) {
                         <meta property="fc:frame:button:1" content="Vegan" />
                         <meta property="fc:frame:button:2" content="Vegetarian" />
                         <meta property="fc:frame:button:3" content="None" />
-                        <meta property="fc:frame:input:text" content="Other" />,
                         <meta property="fc:frame:post_url" content="${process.env["HOST"]}/api/step2" />
+                    </head>
+                </html>
+            `);
+        case ResponseType.EMAIL:
+            return new NextResponse(`
+                <!DOCTYPE html>
+                <html>
+                    <head>
+                        <meta property="fc:frame" content="vNext" />
+                        <meta property="fc:frame:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
+                        <meta property="og:image" content="${process.env["HOST"]}/${RESPONSE_IMAGE}" />
+                        <meta property="fc:frame:button:1" content="Submit" />
+                        <meta property="fc:frame:post_url" content="${process.env["HOST"]}/api/step3" />
+                        <meta property="fc:frame:input:text" content="Enter Email" />,
                     </head>
                 </html>
             `);

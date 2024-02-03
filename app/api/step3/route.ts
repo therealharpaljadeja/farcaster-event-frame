@@ -1,12 +1,6 @@
 import { NextRequest } from "next/server";
 
-import {
-    DIETARY_RESTRICTIONS,
-    ResponseType,
-    User,
-    getResponse,
-    validateFrameRequest,
-} from "@/utils";
+import { ResponseType, User, getResponse, validateFrameRequest } from "@/utils";
 
 import { Redis } from "@upstash/redis";
 
@@ -29,14 +23,15 @@ export async function POST(req: NextRequest): Promise<Response> {
     }
 
     const { fid } = status.action.interactor;
-    const tappedButton = status?.action.tapped_button.index;
 
     let user = (await redis.get(fid)) as User;
 
     await redis.set(fid, {
         ...user,
-        dietaryRestriction: DIETARY_RESTRICTIONS[tappedButton - 1],
+        rsvp: true,
     });
 
-    return getResponse(ResponseType.EMAIL);
+    await redis.decr("ticketsAvailable");
+
+    return getResponse(ResponseType.SUCCESS);
 }
